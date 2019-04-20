@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.canvas.Canvas;
+
 
 
 
@@ -17,6 +19,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        Canvas canvas = new Canvas(500, 500);
+        
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
