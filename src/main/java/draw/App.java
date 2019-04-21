@@ -4,27 +4,35 @@
 package draw;
 
 
-
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
-
-
-
+import javafx.scene.canvas.GraphicsContext;
 
 public class App extends Application {
 
+    private GraphicsContext gc;
+    
     @Override
     public void start(Stage stage) {
-        Canvas canvas = new Canvas(500, 500);
-        
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
+        Canvas canvas = new Canvas(500, 460);
+        canvas.setOnMouseDragged(e -> {
+            gc.lineTo(e.getX(), e.getY());
+            gc.stroke();
+        });
+        canvas.setOnMousePressed(e -> gc.moveTo(e.getX(), e.getY()));
+
+        gc = canvas.getGraphicsContext2D();
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.setLineJoin(StrokeLineJoin.ROUND);
+        gc.setLineWidth(1);
+
+        Group root = new Group(canvas);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
